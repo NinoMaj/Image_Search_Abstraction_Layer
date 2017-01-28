@@ -3,7 +3,8 @@ branch-defaults:
     environment: prod
     group_suffix: null
   master:
-    environment: prod
+    environment: prod-env
+    group_suffix: null
 environment-defaults:
   dev-enva:
     branch: null
