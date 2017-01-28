@@ -9,7 +9,7 @@ environment-defaults:
     branch: null
     repository: null
 global:
-  application_name: URL_Shortener_Microservice
+  application_name: Image Search Abstraction Layer
   branch: null
   default_ec2_keyname: null
   default_platform: node.js

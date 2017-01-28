@@ -1,5 +1,5 @@
 {
-  "name": "url-shoretner-microservice",
+  "name": "image_search_abstraction_layer",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
@@ -31,7 +31,7 @@
     "grunt-svgmin": "*",
     "grunt-usemin": "*",
     "load-grunt-tasks": "*",
-    "sass": "^0.5.0",
+    "sass": "*",
     "time-grunt": "*"
   },
   "engines": {
@@ -46,12 +46,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NinoMaj/URL_shortener_microservice.git"
+    "url": "git+https://github.com/NinoMaj/Image_Search_Abstraction_Layer.git"
   },
   "author": "NinoMaj",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NinoMaj/URL_shortener_microservice/issues"
+    "url": "https://github.com/NinoMaj/Image_Search_Abstraction_Layer.git/issues"
   },
-  "homepage": "https://github.com/NinoMaj/URL_shortener_microservice#readme"
+  "homepage": "https://github.com/NinoMaj/Image_Search_Abstraction_Layer.git#readme"
 }
