@@ -75,7 +75,7 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_
     app.get('/latest', function (request, response, next) {
         imagesCollection.find({
 
-    }, { term: 1, date: 1, _id: 0 }).sort({date: -1}).limit(10).toArray(function (err, doc) {
+        }, { term: 1, date: 1, _id: 0 }).sort({ date: -1 }).limit(10).toArray(function (err, doc) {
             response.send(doc);
         });
     });
@@ -96,10 +96,13 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_
             //     results: results
             // });
             response.send(results);
-            imagesCollection.insertOne({
-                term: searchTerm,
-                date: new Date()
-            })
+            if (searchTerm !== 'favicon.ico') {
+                imagesCollection.insertOne({
+                    term: searchTerm,
+                    date: new Date()
+                })
+            }
+
         };
 
 
