@@ -4,11 +4,11 @@
 
     <p>User stories:</p>
     <ul>
-        <li>I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</li> 
-        <li>When I visit that shortened URL, it will redirect me to my original link.</li>
+        <li>I can get the image URLs, alt text and page urls for a set of images relating to a given search string.</li> 
+        <li>I can paginate through the responses by adding a ?offset=2 parameter to the URL.</li>
+        <li>I can get a list of the most recently submitted search strings.</li>
     </ul>
-    <p>Example creation usage: <a href="http://prod.xwhkbsi3ck.us-west-2.elasticbeanstalk.com/www.google.com">http://prod.xwhkbsi3ck.us-west-2.elasticbeanstalk.com/www.google.com</a> will output: &#123 "CompleteURL":"www.google.com", "ShortURL":"http://prod.xwhkbsi3ck.us-west-2.elasticbeanstalk.com/0"
-&#125</p>
-<p> Then short URL usage: <a href="http://prod.xwhkbsi3ck.us-west-2.elasticbeanstalk.com/1">http://prod.xwhkbsi3ck.us-west-2.elasticbeanstalk.com/0</a> will redirect to: <a href="www.google.com">www.google.com</a></p>
+    <p>Example usage of search <a href="#">/lolcats%20funny?offset=10</a> 
+    <p>Most recently submitted search string <a href="#">: /latest</a>
 
 </div>

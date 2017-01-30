@@ -8,7 +8,9 @@ let express = require('express'),
     port = 3000,
     MongoClient = require('mongodb').MongoClient,
     assert = require('assert'),
-    compression = require('compression');
+    compression = require('compression'),
+    path = require('path'),
+    google = require('google');
 
 /*
  * Use Handlebars for templating
@@ -17,11 +19,11 @@ let exphbs = require('express-handlebars');
 let hbs;
 
 // mongodb://localhost:27017/URLshort
-MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135069.mlab.com:35069/ninodb', function (err, db) {
+MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_search', function (err, db) {
 
     assert.equal(null, err);
     console.log("Successfully connected to MongoDB.");
-    let URLcollection = db.collection('URL');
+    let imagesCollection = db.collection('imagesCollection');
 
     // For gzip compression
     app.use(compression());
@@ -70,74 +72,59 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135069.mlab.com:35069/nino
         response.render('index');
     });
 
-    function validURL(textval) {
-        let urlregex = new RegExp(
-            /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
-        );
-        return urlregex.test(textval);
-    }
+    app.get('/latest', function (request, response, next) {
+        imagesCollection.find({
+
+    }, { term: 1, date: 1, _id: 0 }).sort({date: -1}).limit(10).toArray(function (err, doc) {
+            response.send(doc);
+        });
+    });
 
     // URL handler route
-    app.get('/:url*', function (request, response, next) {
+    app.get('/*', function (request, response, next) {
         let reqPath = request.path.slice(1),
-            shortURL = {};
+            searchTerm = reqPath.split("%20").join(" "),
+            offset = request.query.offset || 10;
+        var results = [];
+
+        function showResults() {
+            // if (shortURL._id) {
+            //     shortURL._id = undefined
+            //};
+            results = JSON.parse(JSON.stringify(results));
+            // response.render('result', {
+            //     results: results
+            // });
+            response.send(results);
+            imagesCollection.insertOne({
+                term: searchTerm,
+                date: new Date()
+            })
+        };
+
+
         console.log('Requested path is: ', reqPath);
-        function showResult() {
-            if (shortURL._id) {
-                shortURL._id = undefined
-                };
-            shortURL = JSON.stringify(shortURL);
-            response.render('result', {
-                result: shortURL
-            });
-        }
+        console.log('Search term: ', searchTerm);
+        console.log('Offset:', offset);
+        google.resultsPerPage = offset;
 
-        //check is it a short link
-        URLcollection.findOne({ "ShortURL": Number(reqPath)}, {_id: 0}, function (err, doc) {
-            if (doc) {
-                console.log('doc.CompleteURL', doc.CompleteURL);
-                // window.open(doc.CompleteURL, "_self");
-                // window.location.href = "doc.CompleteURL";
-                let redirectLink = (doc.CompleteURL.includes('http')) ? doc.CompleteURL : 'http://' + doc.CompleteURL;
-                response.redirect(redirectLink);
-            } else {
-                if (validURL(reqPath)) {
-                    console.log("Valid URL format");
-                    // checking is URL already in DB
-                    URLcollection.find({ "CompleteURL": reqPath }, {_id: 0}).toArray(function (err, inDB) {
-                        console.log('inDB', inDB + ' ' + inDB.length);
-                        if (inDB.length != 0) {
-                            // if URL is already in DB
-                            console.log("Already in DB", inDB);
-                            shortURL = inDB[0];
-                            showResult();
-                        } else {
-                            // Creating short URL based on collection length
-                            URLcollection.find({}, {_id: 0}).toArray(function (err, doc) {
-                                if (err) throw err
-                                shortURL = {
-                                    CompleteURL: reqPath,
-                                    ShortURL: doc.length
-                                }
-                                console.log('bla bla ', shortURL);
-                                let document = shortURL;
-
-                                // Saving short URL in base
-                                URLcollection.insertOne(document, function (err, data) {
-                                    if (err) throw err
-                                    console.log('dla', shortURL);
-                                    console.log('doc', document)
-                                    showResult();
-                                });
-                            });
-                        }
-                    });
-                } else {
-                    console.log("Not a valid URL format!");
-                    shortURL = "Not a valid URL format";
-                    showResult();
-                }
+        google(searchTerm, function (err, res) {
+            if (err) console.error(err)
+            for (var i = 0; i < res.links.length; ++i) {
+                let link = res.links[i],
+                    result = {
+                        title: link.title,
+                        link: link.href,
+                        description: link.description
+                    }
+                results.push(result);
             }
+            showResults();
+            // I'll show only first page of results, to enable set nextCounter = 0, outside of google fn
+            // if (nextCounter < 4) {
+            //     nextCounter += 1
+            //     if (res.next) res.next()
+            // }
         });
     });
 
@@ -147,4 +134,4 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135069.mlab.com:35069/nino
     app.listen(process.env.PORT || port);
     console.log('Express started on port ' + port);
 
-}); // MongoClient.connect('mongodb://localhost:27017/URLshort', function (err, db) {
+}); // closing MongoClient
