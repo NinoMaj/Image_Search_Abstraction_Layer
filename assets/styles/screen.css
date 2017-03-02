@@ -3307,6 +3307,12 @@ label,
 /**
  * GRID
 */
+/* line 8, sass/ui/_scaffolding.scss */
+.container {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
 /*------------------------------------*\
     $GRID
 \*------------------------------------*/
@@ -3726,10 +3732,6 @@ input[type=password]:focus {
 /*------------------------------------*\
     $BASE
 \*------------------------------------*/
-.container {
-  margin-top: 50px;
-  margin-left: 50px;
-}
 /*------------------------------------*\
     $SIZES
 \*------------------------------------*/
@@ -3739,15 +3741,9 @@ input[type=password]:focus {
 /**
  * Colors
  */
- a{
-    color: lightgray;
-}
 /**
  * HOVERS
  */
- a:hover {
-   color: palevioletred
- }
 /*------------------------------------*\
     $CONTENTS
 \*------------------------------------*/
@@ -3755,6 +3751,18 @@ input[type=password]:focus {
  * FOOTER
 */
 /* line 8, sass/ui/_footer.scss */
+footer {
+  border-top: 1px solid #e5e5e5;
+  color: #fff;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  text-align: center;
+}
 
 /*------------------------------------*\
     $FOOTER
@@ -3766,7 +3774,23 @@ input[type=password]:focus {
  * SECTION TITLE
 */
 /* line 35, sass/screen.scss */
+.container {
+  margin-top: 50px;
+  margin-left: 50px;
+}
 
 /* line 40, sass/screen.scss */
+footer {
+  border-top: 1px solid #e5e5e5;
+  color: #fff;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  text-align: center;
+}
 
 /*# sourceMappingURL=screen.css.map */
