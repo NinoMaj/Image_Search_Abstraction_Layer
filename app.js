@@ -19,7 +19,7 @@ let exphbs = require('express-handlebars');
 let hbs;
 
 // mongodb://localhost:27017/URLshort
-MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_search', function (err, db) {
+MongoClient.connect('mongodb://heroku_45tmrchd:skq5ikh12i6ibdf1sf7pbm524n@ds113680.mlab.com:13680/heroku_45tmrchd', function (err, db) {
 
     assert.equal(null, err);
     console.log("Successfully connected to MongoDB.");
