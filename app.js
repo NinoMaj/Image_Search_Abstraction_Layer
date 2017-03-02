@@ -74,7 +74,6 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_
 
     app.get('/latest', function (request, response, next) {
         imagesCollection.find({
-
         }, { term: 1, date: 1, _id: 0 }).sort({ date: -1 }).limit(10).toArray(function (err, doc) {
             response.send(doc);
         });
@@ -88,13 +87,7 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_
         var results = [];
 
         function showResults() {
-            // if (shortURL._id) {
-            //     shortURL._id = undefined
-            //};
             results = JSON.parse(JSON.stringify(results));
-            // response.render('result', {
-            //     results: results
-            // });
             response.send(results);
             if (searchTerm !== 'favicon.ico') {
                 imagesCollection.insertOne({
@@ -106,9 +99,6 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_
         };
 
 
-        console.log('Requested path is: ', reqPath);
-        console.log('Search term: ', searchTerm);
-        console.log('Offset:', offset);
         google.resultsPerPage = offset;
 
         google(searchTerm, function (err, res) {
@@ -123,11 +113,6 @@ MongoClient.connect('mongodb://NinoMaj:bosswarmLab1@ds135519.mlab.com:35519/img_
                 results.push(result);
             }
             showResults();
-            // I'll show only first page of results, to enable set nextCounter = 0, outside of google fn
-            // if (nextCounter < 4) {
-            //     nextCounter += 1
-            //     if (res.next) res.next()
-            // }
         });
     });
 
