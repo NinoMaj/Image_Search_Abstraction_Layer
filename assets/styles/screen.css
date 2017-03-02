@@ -3361,7 +3361,7 @@ html {
 \*------------------------------------*/
 /* line 86, sass/ui/_typography.scss */
 a {
-  color: #58585B;
+  color: lightgray;
 }
 /* line 90, sass/ui/_typography.scss */
 a:hover {
@@ -3726,6 +3726,10 @@ input[type=password]:focus {
 /*------------------------------------*\
     $BASE
 \*------------------------------------*/
+.container {
+  margin-top: 50px;
+  margin-left: 50px;
+}
 /*------------------------------------*\
     $SIZES
 \*------------------------------------*/
@@ -3735,9 +3739,15 @@ input[type=password]:focus {
 /**
  * Colors
  */
+ a{
+    color: lightgray;
+}
 /**
  * HOVERS
  */
+ a:hover {
+   color: palevioletred
+ }
 /*------------------------------------*\
     $CONTENTS
 \*------------------------------------*/
